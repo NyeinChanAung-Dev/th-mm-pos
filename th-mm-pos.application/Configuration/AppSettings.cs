@@ -2,5 +2,5 @@
 
 public class AppSettings
 {
-    public string? Test { get; set; }
+    public int SessionExpireTimeInMinutes { get; set; }
 }
