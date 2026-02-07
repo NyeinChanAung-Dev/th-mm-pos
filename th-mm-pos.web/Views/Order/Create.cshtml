@@ -1,0 +1,134 @@
+@model th_mm_pos.application.DTOs.OrderDto
+
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-plus-circle"></i> Create New Order</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                        
+                        <h5 class="mb-3">Customer Information</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CustomerName" class="form-label">Customer Name</label>
+                                <input asp-for="CustomerName" class="form-control" />
+                                <span asp-validation-for="CustomerName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CustomerPhone" class="form-label">Phone Number</label>
+                                <input asp-for="CustomerPhone" class="form-control" />
+                                <span asp-validation-for="CustomerPhone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="ExpectedFulfillmentDate" class="form-label">Expected Fulfillment Date</label>
+                            <input asp-for="ExpectedFulfillmentDate" type="date" class="form-control" />
+                            <span asp-validation-for="ExpectedFulfillmentDate" class="text-danger"></span>
+                        </div>
+                        
+                        <hr>
+                        
+                        <h5 class="mb-3">Order Items</h5>
+                        <div id="orderItems">
+                            <div class="row mb-2 order-item">
+                                <div class="col-md-5">
+                                    <select name="Items[0].ProductId" class="form-select" required>
+                                        <option value="">Select Product</option>
+                                        @foreach (var product in ViewBag.Products)
+                                        {
+                                            <option value="@product.Id">@product.Name - @product.Price.ToString("C")</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" name="Items[0].Quantity" class="form-control" placeholder="Quantity" min="1" required />
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" name="Items[0].UnitPrice" class="form-control" placeholder="Price" step="0.01" required />
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-outline-danger" onclick="removeItem(this)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn btn-outline-primary mb-3" onclick="addItem()">
+                            <i class="bi bi-plus-circle"></i> Add Item
+                        </button>
+                        
+                        <hr>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Create Order
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        let itemIndex = 1;
+        
+        function addItem() {
+            const container = document.getElementById('orderItems');
+            const newItem = `
+                <div class="row mb-2 order-item">
+                    <div class="col-md-5">
+                        <select name="Items[${itemIndex}].ProductId" class="form-select" required>
+                            <option value="">Select Product</option>
+                            @foreach (var product in ViewBag.Products)
+                            {
+                                <option value="@product.Id">@product.Name - @product.Price.ToString("C")</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" name="Items[${itemIndex}].Quantity" class="form-control" placeholder="Quantity" min="1" required />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" name="Items[${itemIndex}].UnitPrice" class="form-control" placeholder="Price" step="0.01" required />
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-outline-danger" onclick="removeItem(this)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', newItem);
+            itemIndex++;
+        }
+        
+        function removeItem(button) {
+            const items = document.querySelectorAll('.order-item');
+            if (items.length > 1) {
+                button.closest('.order-item').remove();
+            } else {
+                alert('Order must have at least one item');
+            }
+        }
+    </script>
+}

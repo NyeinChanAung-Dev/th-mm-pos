@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="th-mm-pos.domain\th-mm-pos.domain.csproj" />
+  <Project Path="th-mm-pos.application\th-mm-pos.application.csproj" />
+  <Project Path="th-mm-pos.infrastructure\th-mm-pos.infrastructure.csproj" />
+  <Project Path="th-mm-pos.web\th-mm-pos.web.csproj" />
+</Solution>

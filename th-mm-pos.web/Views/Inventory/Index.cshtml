@@ -1,0 +1,97 @@
+@model IEnumerable<th_mm_pos.application.DTOs.ProductDto>
+
+@{
+    ViewData["Title"] = "Inventory Management";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-box-seam"></i> Inventory Management</h2>
+            <p class="text-muted">Manage products and stock levels</p>
+        </div>
+        <div class="col-auto">
+            <a asp-action="LowStock" class="btn btn-warning me-2">
+                <i class="bi bi-exclamation-triangle"></i> Low Stock
+            </a>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Add Product
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" name="search" class="form-control" placeholder="Search by name, SKU, or category" value="@ViewBag.Search" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>SKU</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Reorder Level</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model)
+                        {
+                            <tr class="@(product.Quantity < product.ReorderLevel ? "table-warning" : "")">
+                                <td><code>@product.SKU</code></td>
+                                <td>@product.Name</td>
+                                <td>@product.Category</td>
+                                <td>@product.Price.ToString("C")</td>
+                                <td>
+                                    <strong>@product.Quantity</strong>
+                                    @if (product.Quantity < product.ReorderLevel)
+                                    {
+                                        <i class="bi bi-exclamation-triangle text-warning" title="Low stock"></i>
+                                    }
+                                </td>
+                                <td>@product.ReorderLevel</td>
+                                <td>
+                                    @if (product.IsActive)
+                                    {
+                                        <span class="badge bg-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Inactive</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@product.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

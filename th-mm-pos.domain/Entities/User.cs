@@ -1,0 +1,15 @@
+namespace th_mm_pos.domain.Entities;
+
+public class User
+{
+    public int Id { get; set; }
+    public string Username { get; set; } = string.Empty;
+    public string PasswordHash { get; set; } = string.Empty;
+    public bool IsActive { get; set; } = true;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? LastLoginAt { get; set; }
+    
+    public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+    public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+    public ICollection<Order> Orders { get; set; } = new List<Order>();
+}

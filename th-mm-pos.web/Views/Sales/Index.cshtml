@@ -1,0 +1,253 @@
+@model IEnumerable<th_mm_pos.application.DTOs.ProductDto>
+
+@{
+    ViewData["Title"] = "Point of Sale";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Product Selection -->
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-grid"></i> Products</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <input type="text" id="searchProduct" class="form-control" placeholder="Search products by name or SKU...">
+                    </div>
+                    <div class="row" id="productGrid">
+                        @foreach (var product in Model)
+                        {
+                            <div class="col-md-3 col-sm-4 col-6 mb-3 product-item" data-name="@product.Name.ToLower()" data-sku="@product.SKU.ToLower()">
+                                <div class="card h-100 product-card" onclick="addToCart(@product.Id, '@product.Name', @product.Price, @product.Quantity)">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-box-seam text-primary" style="font-size: 2rem;"></i>
+                                        <h6 class="mt-2 mb-1">@product.Name</h6>
+                                        <p class="text-muted small mb-1">@product.SKU</p>
+                                        <p class="mb-0"><strong>@product.Price.ToString("C")</strong></p>
+                                        <small class="text-muted">Stock: @product.Quantity</small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shopping Cart -->
+        <div class="col-md-4">
+            <div class="card shadow-sm sticky-top" style="top: 20px;">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-cart"></i> Current Sale</h5>
+                </div>
+                <div class="card-body">
+                    <div id="cartItems" class="mb-3" style="max-height: 300px; overflow-y: auto;">
+                        <p class="text-muted text-center">No items in cart</p>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between">
+                            <span>Subtotal:</span>
+                            <strong id="subtotal">$0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Tax (10%):</span>
+                            <strong id="tax">$0.00</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <label for="discount">Discount:</label>
+                            <input type="number" id="discount" class="form-control form-control-sm w-50" value="0" step="0.01" min="0" onchange="updateTotals()">
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <h5>Total:</h5>
+                            <h5 id="total" class="text-success">$0.00</h5>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Payment Method</label>
+                        <select id="paymentMethod" class="form-select">
+                            <option value="0">Cash</option>
+                            <option value="1">Credit Card</option>
+                            <option value="2">Debit Card</option>
+                            <option value="3">Mobile Payment</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success btn-lg" onclick="completeSale()">
+                            <i class="bi bi-check-circle"></i> Complete Sale
+                        </button>
+                        <button class="btn btn-outline-danger" onclick="clearCart()">
+                            <i class="bi bi-x-circle"></i> Clear Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    let cart = [];
+    
+    function addToCart(id, name, price, stock) {
+        const existingItem = cart.find(item => item.id === id);
+        
+        if (existingItem) {
+            if (existingItem.quantity < stock) {
+                existingItem.quantity++;
+            } else {
+                alert('Insufficient stock!');
+                return;
+            }
+        } else {
+            cart.push({ id, name, price, quantity: 1, stock });
+        }
+        
+        renderCart();
+        updateTotals();
+    }
+    
+    function removeFromCart(id) {
+        cart = cart.filter(item => item.id !== id);
+        renderCart();
+        updateTotals();
+    }
+    
+    function updateQuantity(id, quantity) {
+        const item = cart.find(item => item.id === id);
+        if (item) {
+            if (quantity > 0 && quantity <= item.stock) {
+                item.quantity = quantity;
+            } else if (quantity > item.stock) {
+                alert('Insufficient stock!');
+                return;
+            }
+        }
+        renderCart();
+        updateTotals();
+    }
+    
+    function renderCart() {
+        const cartItems = document.getElementById('cartItems');
+        
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<p class="text-muted text-center">No items in cart</p>';
+            return;
+        }
+        
+        let html = '';
+        cart.forEach(item => {
+            const lineTotal = item.price * item.quantity;
+            html += `
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                    <div class="flex-grow-1">
+                        <strong>${item.name}</strong><br>
+                        <small>$${item.price.toFixed(2)} × 
+                            <input type="number" value="${item.quantity}" min="1" max="${item.stock}" 
+                                   style="width: 50px;" class="form-control form-control-sm d-inline"
+                                   onchange="updateQuantity(${item.id}, parseInt(this.value))">
+                        </small>
+                    </div>
+                    <div class="text-end">
+                        <strong>$${lineTotal.toFixed(2)}</strong><br>
+                        <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${item.id})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        
+        cartItems.innerHTML = html;
+    }
+    
+    function updateTotals() {
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const tax = subtotal * 0.10;
+        const discount = parseFloat(document.getElementById('discount').value) || 0;
+        const total = subtotal + tax - discount;
+        
+        document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+        document.getElementById('tax').textContent = '$' + tax.toFixed(2);
+        document.getElementById('total').textContent = '$' + total.toFixed(2);
+    }
+    
+    function clearCart() {
+        if (confirm('Clear all items from cart?')) {
+            cart = [];
+            renderCart();
+            updateTotals();
+        }
+    }
+    
+    function completeSale() {
+        if (cart.length === 0) {
+            alert('Cart is empty!');
+            return;
+        }
+        
+        const transaction = {
+            items: cart.map(item => ({
+                productId: item.id,
+                productName: item.name,
+                quantity: item.quantity,
+                unitPrice: item.price,
+                lineTotal: item.price * item.quantity
+            })),
+            discount: parseFloat(document.getElementById('discount').value) || 0,
+            paymentMethod: parseInt(document.getElementById('paymentMethod').value)
+        };
+        
+        fetch('/Sales/Create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(transaction)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Sale completed successfully!');
+                window.open('/Sales/Receipt/' + data.transactionId, '_blank');
+                clearCart();
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            alert('Error completing sale: ' + error);
+        });
+    }
+    
+    // Search functionality
+    document.getElementById('searchProduct').addEventListener('input', function(e) {
+        const search = e.target.value.toLowerCase();
+        document.querySelectorAll('.product-item').forEach(item => {
+            const name = item.dataset.name;
+            const sku = item.dataset.sku;
+            if (name.includes(search) || sku.includes(search)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+</script>
+<style>
+    .product-card {
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+</style>
+}

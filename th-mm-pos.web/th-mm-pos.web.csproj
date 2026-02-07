@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\th-mm-pos.application\th-mm-pos.application.csproj" />
+    <ProjectReference Include="..\th-mm-pos.infrastructure\th-mm-pos.infrastructure.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>th_mm_pos.web</RootNamespace>
+  </PropertyGroup>
+
+</Project>

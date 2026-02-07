@@ -1,0 +1,170 @@
+@{
+    ViewData["Title"] = "Process Return";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-arrow-return-left"></i> Process Return</h2>
+            <p class="text-muted">Return items from a previous transaction</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <label class="form-label">Transaction ID</label>
+                        <div class="input-group">
+                            <input type="number" id="transactionId" class="form-control" placeholder="Enter transaction ID">
+                            <button class="btn btn-primary" onclick="loadTransaction()">
+                                <i class="bi bi-search"></i> Load Transaction
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="transactionDetails" style="display: none;">
+                        <h5>Transaction Details</h5>
+                        <div id="transactionInfo" class="mb-3"></div>
+                        
+                        <h5>Select Items to Return</h5>
+                        <div id="itemsList"></div>
+                        
+                        <div class="mt-4">
+                            <button class="btn btn-success" onclick="processReturn()">
+                                <i class="bi bi-check-circle"></i> Process Return
+                            </button>
+                            <button class="btn btn-secondary" onclick="resetForm()">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    let currentTransaction = null;
+    let selectedItems = [];
+    
+    function loadTransaction() {
+        const transactionId = document.getElementById('transactionId').value;
+        
+        if (!transactionId) {
+            alert('Please enter a transaction ID');
+            return;
+        }
+        
+        fetch(`/Sales/GetTransaction/${transactionId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    currentTransaction = data.transaction;
+                    displayTransaction();
+                } else {
+                    alert('Transaction not found or cannot be returned');
+                }
+            })
+            .catch(error => {
+                alert('Error loading transaction: ' + error);
+            });
+    }
+    
+    function displayTransaction() {
+        document.getElementById('transactionDetails').style.display = 'block';
+        
+        const info = `
+            <div class="alert alert-info">
+                <strong>Transaction #${currentTransaction.id}</strong><br>
+                Date: ${new Date(currentTransaction.transactionDate).toLocaleString()}<br>
+                Total: $${currentTransaction.total.toFixed(2)}<br>
+                Payment Method: ${getPaymentMethodName(currentTransaction.paymentMethod)}
+            </div>
+        `;
+        document.getElementById('transactionInfo').innerHTML = info;
+        
+        let itemsHtml = '<div class="list-group">';
+        currentTransaction.items.forEach(item => {
+            itemsHtml += `
+                <div class="list-group-item">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="${item.id}" id="item${item.id}" 
+                               onchange="toggleItem(${item.id})">
+                        <label class="form-check-label w-100" for="item${item.id}">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>${item.productName}</strong><br>
+                                    <small>Quantity: ${item.quantity} × $${item.unitPrice.toFixed(2)}</small>
+                                </div>
+                                <div class="text-end">
+                                    <strong>$${item.lineTotal.toFixed(2)}</strong>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            `;
+        });
+        itemsHtml += '</div>';
+        
+        document.getElementById('itemsList').innerHTML = itemsHtml;
+    }
+    
+    function toggleItem(itemId) {
+        const checkbox = document.getElementById('item' + itemId);
+        if (checkbox.checked) {
+            selectedItems.push(itemId);
+        } else {
+            selectedItems = selectedItems.filter(id => id !== itemId);
+        }
+    }
+    
+    function processReturn() {
+        if (selectedItems.length === 0) {
+            alert('Please select at least one item to return');
+            return;
+        }
+        
+        if (!confirm('Process return for selected items?')) {
+            return;
+        }
+        
+        fetch('/Sales/ProcessReturn', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                originalTransactionId: currentTransaction.id,
+                itemIds: selectedItems
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Return processed successfully!');
+                resetForm();
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            alert('Error processing return: ' + error);
+        });
+    }
+    
+    function resetForm() {
+        document.getElementById('transactionId').value = '';
+        document.getElementById('transactionDetails').style.display = 'none';
+        currentTransaction = null;
+        selectedItems = [];
+    }
+    
+    function getPaymentMethodName(method) {
+        const methods = ['Cash', 'Credit Card', 'Debit Card', 'Mobile Payment'];
+        return methods[method] || 'Unknown';
+    }
+</script>
+}

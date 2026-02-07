@@ -1,0 +1,83 @@
+@model th_mm_pos.application.DTOs.UserUpdateDto
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="bi bi-pencil"></i> Edit User</h2>
+            <p class="text-muted">Update user permissions and status</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                        
+                        <input type="hidden" asp-for="UserId" />
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" value="@ViewBag.Username" disabled />
+                            <small class="form-text text-muted">Username cannot be changed</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                                <label asp-for="IsActive" class="form-check-label">Active</label>
+                            </div>
+                            <small class="form-text text-muted">Inactive users cannot log in</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Roles</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="RoleIds" value="1" id="roleAdmin">
+                                <label class="form-check-label" for="roleAdmin">
+                                    Admin - Full system access
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="RoleIds" value="2" id="roleManager">
+                                <label class="form-check-label" for="roleManager">
+                                    Manager - Reports and oversight
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="RoleIds" value="3" id="roleCashier">
+                                <label class="form-check-label" for="roleCashier">
+                                    Cashier - Sales operations
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="RoleIds" value="4" id="roleInventory">
+                                <label class="form-check-label" for="roleInventory">
+                                    Inventory Clerk - Stock management
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Save Changes
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

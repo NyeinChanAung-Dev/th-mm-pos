@@ -1,0 +1,83 @@
+@model th_mm_pos.application.DTOs.LoginDto
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TH-MM POS System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-shop text-primary" style="font-size: 3rem;"></i>
+                            <h2 class="mt-2">TH-MM POS System</h2>
+                            <p class="text-muted">Sign in to continue</p>
+                        </div>
+                        
+                        <form asp-action="Login" method="post">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                            
+                            <div class="mb-3">
+                                <label asp-for="Username" class="form-label">
+                                    <i class="bi bi-person"></i> Username
+                                </label>
+                                <input asp-for="Username" class="form-control form-control-lg" placeholder="Enter username" autofocus />
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label asp-for="Password" class="form-label">
+                                    <i class="bi bi-lock"></i> Password
+                                </label>
+                                <input asp-for="Password" type="password" class="form-control form-control-lg" placeholder="Enter password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-box-arrow-in-right"></i> Login
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-4 text-center">
+                            <div class="alert alert-info py-2">
+                                <small><i class="bi bi-info-circle"></i> Default: <strong>admin</strong> / <strong>Admin@123</strong></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-3 text-white">
+                    <small>&copy; 2026 TH-MM POS System. All rights reserved.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
