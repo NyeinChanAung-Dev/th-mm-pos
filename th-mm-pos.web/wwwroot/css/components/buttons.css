@@ -1,0 +1,283 @@
+/* ============================================
+   Button Component Styles
+   ============================================
+   
+   Provides button variants, sizes, and states
+   for the TH-MM POS application.
+   
+   Variants: primary, secondary, success, danger, outline, ghost
+   Sizes: sm, md, lg
+   States: default, hover, active, disabled, loading
+   ============================================ */
+
+/* Base Button Styles */
+.btn-custom {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    font-family: var(--font-family-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    position: relative;
+}
+
+.btn-custom:focus {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+.btn-custom:disabled,
+.btn-custom[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Button Sizes */
+.btn-custom-sm {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    min-height: 32px;
+}
+
+.btn-custom-md {
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-base);
+    min-height: 40px;
+}
+
+.btn-custom-lg {
+    padding: var(--spacing-4) var(--spacing-6);
+    font-size: var(--font-size-lg);
+    min-height: 48px;
+}
+
+/* Primary Variant */
+.btn-custom-primary {
+    background-color: var(--color-primary-600);
+    color: white;
+    border-color: var(--color-primary-600);
+}
+
+.btn-custom-primary:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-primary-700);
+    border-color: var(--color-primary-700);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-custom-primary:active:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-primary-800);
+    border-color: var(--color-primary-800);
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Secondary Variant */
+.btn-custom-secondary {
+    background-color: var(--color-gray-600);
+    color: white;
+    border-color: var(--color-gray-600);
+}
+
+.btn-custom-secondary:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-gray-700);
+    border-color: var(--color-gray-700);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-custom-secondary:active:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-gray-800);
+    border-color: var(--color-gray-800);
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Success Variant */
+.btn-custom-success {
+    background-color: var(--color-success);
+    color: white;
+    border-color: var(--color-success);
+}
+
+.btn-custom-success:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: #0ea572;
+    border-color: #0ea572;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-custom-success:active:not(:disabled):not([aria-disabled="true"]) {
+    background-color: #0d9463;
+    border-color: #0d9463;
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Danger Variant */
+.btn-custom-danger {
+    background-color: var(--color-danger);
+    color: white;
+    border-color: var(--color-danger);
+}
+
+.btn-custom-danger:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: #dc2626;
+    border-color: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-custom-danger:active:not(:disabled):not([aria-disabled="true"]) {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Outline Variant */
+.btn-custom-outline {
+    background-color: transparent;
+    color: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+}
+
+.btn-custom-outline:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-primary-50);
+    color: var(--color-primary-700);
+    border-color: var(--color-primary-700);
+}
+
+.btn-custom-outline:active:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-primary-100);
+    color: var(--color-primary-800);
+    border-color: var(--color-primary-800);
+}
+
+/* Dark theme adjustments for outline */
+[data-theme="dark"] .btn-custom-outline {
+    color: var(--color-primary-400);
+    border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .btn-custom-outline:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: var(--color-primary-300);
+    border-color: var(--color-primary-300);
+}
+
+/* Ghost Variant */
+.btn-custom-ghost {
+    background-color: transparent;
+    color: var(--color-text-primary);
+    border-color: transparent;
+}
+
+.btn-custom-ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-gray-100);
+    color: var(--color-text-primary);
+}
+
+.btn-custom-ghost:active:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-gray-200);
+}
+
+/* Dark theme adjustments for ghost */
+[data-theme="dark"] .btn-custom-ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-gray-800);
+}
+
+[data-theme="dark"] .btn-custom-ghost:active:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-gray-700);
+}
+
+/* Loading State */
+.btn-custom-loading {
+    position: relative;
+}
+
+.btn-custom-spinner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-custom-spinner i {
+    animation: btn-spin 1s linear infinite;
+}
+
+@keyframes btn-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Icon Spacing */
+.btn-custom i {
+    font-size: 1em;
+    line-height: 1;
+}
+
+/* Responsive Touch Targets for Mobile */
+@media (max-width: 767px) {
+    .btn-custom-sm {
+        min-height: 44px;
+        min-width: 44px;
+        padding: var(--spacing-2) var(--spacing-4);
+    }
+
+    .btn-custom-md {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .btn-custom-lg {
+        min-height: 48px;
+        min-width: 48px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .btn-custom {
+        transition: none;
+    }
+
+    .btn-custom:hover:not(:disabled):not([aria-disabled="true"]) {
+        transform: none;
+    }
+
+    .btn-custom-spinner i {
+        animation: none;
+    }
+}
+
+/* Button Group Support (for future use) */
+.btn-group-custom {
+    display: inline-flex;
+    gap: var(--spacing-2);
+}
+
+.btn-group-custom .btn-custom {
+    flex: 0 0 auto;
+}
+
+/* Full Width Button */
+.btn-custom-block {
+    display: flex;
+    width: 100%;
+}

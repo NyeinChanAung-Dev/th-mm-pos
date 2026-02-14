@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Layout Test</title>
+  <link rel="stylesheet" href="../design-system/tokens.css">
+  <link rel="stylesheet" href="../design-system/colors.css">
+  <link rel="stylesheet" href="../design-system/typography.css">
+  <link rel="stylesheet" href="../design-system/spacing.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="grid.css">
+  <style>
+    body {
+      font-family: var(--font-family-base);
+      background-color: var(--color-background);
+      color: var(--color-text-primary);
+      padding: var(--spacing-4);
+    }
+    
+    .test-section {
+      margin-bottom: var(--spacing-8);
+      padding: var(--spacing-4);
+      background: var(--color-surface);
+      border-radius: var(--radius-md);
+    }
+    
+    .test-box {
+      background: var(--color-primary-100);
+      padding: var(--spacing-4);
+      border-radius: var(--radius-md);
+      text-align: center;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .breakpoint-indicator {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: var(--spacing-2) var(--spacing-4);
+      background: var(--color-primary-600);
+      color: white;
+      border-radius: var(--radius-md);
+      font-weight: var(--font-weight-bold);
+      z-index: 1000;
+    }
+    
+    .breakpoint-indicator::before {
+      content: 'XS (< 576px)';
+    }
+    
+    @media (min-width: 576px) {
+      .breakpoint-indicator::before {
+        content: 'SM (≥ 576px)';
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .breakpoint-indicator::before {
+        content: 'MD (≥ 768px)';
+      }
+    }
+    
+    @media (min-width: 992px) {
+      .breakpoint-indicator::before {
+        content: 'LG (≥ 992px)';
+      }
+    }
+    
+    @media (min-width: 1200px) {
+      .breakpoint-indicator::before {
+        content: 'XL (≥ 1200px)';
+      }
+    }
+    
+    @media (min-width: 1400px) {
+      .breakpoint-indicator::before {
+        content: 'XXL (≥ 1400px)';
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="breakpoint-indicator"></div>
+  
+  <h1>Responsive Layout System Test</h1>
+  <p>Resize your browser window to see responsive behavior. Current breakpoint is shown in the top-right corner.</p>
+  
+  <!-- Test 1: Fluid Typography -->
+  <div class="test-section">
+    <h2>Test 1: Fluid Typography Scaling</h2>
+    <h1>Heading 1 (clamp 30px-36px)</h1>
+    <h2>Heading 2 (clamp 24px-30px)</h2>
+    <h3>Heading 3 (clamp 20px-24px)</h3>
+    <h4>Heading 4 (clamp 18px-20px)</h4>
+    <h5>Heading 5 (clamp 16px-18px)</h5>
+    <h6>Heading 6 (clamp 14px-16px)</h6>
+    <p>Body text scales with viewport on tablet, locks at 16px on desktop.</p>
+  </div>
+  
+  <!-- Test 2: Responsive Grid -->
+  <div class="test-section">
+    <h2>Test 2: Responsive Grid (1 col mobile → 2 col tablet → 4 col desktop)</h2>
+    <div class="grid-metrics">
+      <div class="test-box">Metric 1</div>
+      <div class="test-box">Metric 2</div>
+      <div class="test-box">Metric 3</div>
+      <div class="test-box">Metric 4</div>
+    </div>
+  </div>
+  
+  <!-- Test 3: Auto-fit Grid -->
+  <div class="test-section">
+    <h2>Test 3: Auto-fit Grid (responsive without media queries)</h2>
+    <div class="grid-auto-fit">
+      <div class="test-box">Item 1</div>
+      <div class="test-box">Item 2</div>
+      <div class="test-box">Item 3</div>
+      <div class="test-box">Item 4</div>
+      <div class="test-box">Item 5</div>
+      <div class="test-box">Item 6</div>
+    </div>
+  </div>
+  
+  <!-- Test 4: Display Utilities -->
+  <div class="test-section">
+    <h2>Test 4: Display Utilities</h2>
+    <div class="d-lg-none" style="background: var(--color-success); padding: var(--spacing-3); margin-bottom: var(--spacing-2);">
+      Hidden on desktop (≥992px)
+    </div>
+    <div class="d-none d-lg-block" style="background: var(--color-info); padding: var(--spacing-3); margin-bottom: var(--spacing-2);">
+      Visible only on desktop (≥992px)
+    </div>
+    <div class="mobile-only" style="background: var(--color-warning); padding: var(--spacing-3); margin-bottom: var(--spacing-2);">
+      Mobile only (&lt;576px)
+    </div>
+    <div class="desktop-up" style="background: var(--color-primary-500); color: white; padding: var(--spacing-3);">
+      Desktop and up (≥992px)
+    </div>
+  </div>
+  
+  <!-- Test 5: Flex Direction -->
+  <div class="test-section">
+    <h2>Test 5: Responsive Flex Direction (column on mobile, row on desktop)</h2>
+    <div class="d-flex flex-xs-column flex-lg-row gap-4">
+      <div class="test-box" style="flex: 1;">Flex Item 1</div>
+      <div class="test-box" style="flex: 1;">Flex Item 2</div>
+      <div class="test-box" style="flex: 1;">Flex Item 3</div>
+    </div>
+  </div>
+  
+  <!-- Test 6: Column Spans -->
+  <div class="test-section">
+    <h2>Test 6: Grid Column Spans</h2>
+    <div class="grid-cols-12">
+      <div class="col-span-12 col-md-span-6 col-lg-span-4 test-box">
+        12 cols mobile<br>6 cols tablet<br>4 cols desktop
+      </div>
+      <div class="col-span-12 col-md-span-6 col-lg-span-4 test-box">
+        12 cols mobile<br>6 cols tablet<br>4 cols desktop
+      </div>
+      <div class="col-span-12 col-md-span-6 col-lg-span-4 test-box">
+        12 cols mobile<br>6 cols tablet<br>4 cols desktop
+      </div>
+    </div>
+  </div>
+  
+  <!-- Test 7: Touch Targets -->
+  <div class="test-section">
+    <h2>Test 7: Touch Targets (44x44px minimum on mobile)</h2>
+    <p>On mobile (&lt;768px), all buttons below should be at least 44x44px:</p>
+    <button class="touch-target" style="margin: var(--spacing-2); padding: var(--spacing-2) var(--spacing-4); background: var(--color-primary-600); color: white; border: none; border-radius: var(--radius-md);">
+      Button 1
+    </button>
+    <button class="touch-target" style="margin: var(--spacing-2); padding: var(--spacing-2) var(--spacing-4); background: var(--color-success); color: white; border: none; border-radius: var(--radius-md);">
+      Button 2
+    </button>
+    <button class="touch-target" style="margin: var(--spacing-2); padding: var(--spacing-2) var(--spacing-4); background: var(--color-danger); color: white; border: none; border-radius: var(--radius-md);">
+      Button 3
+    </button>
+  </div>
+  
+  <!-- Test 8: Responsive Spacing -->
+  <div class="test-section">
+    <h2>Test 8: Responsive Gap Utilities</h2>
+    <div class="d-flex flex-wrap gap-xs-2 gap-md-4 gap-lg-8">
+      <div class="test-box" style="width: 100px;">Gap increases</div>
+      <div class="test-box" style="width: 100px;">with</div>
+      <div class="test-box" style="width: 100px;">screen</div>
+      <div class="test-box" style="width: 100px;">size</div>
+    </div>
+  </div>
+  
+  <!-- Test 9: Two Column Layout -->
+  <div class="test-section">
+    <h2>Test 9: Two Column Layout (stacked on mobile)</h2>
+    <div class="grid-two-column">
+      <div class="test-box" style="min-height: 200px;">Column 1<br>Full width on mobile<br>50% on tablet+</div>
+      <div class="test-box" style="min-height: 200px;">Column 2<br>Full width on mobile<br>50% on tablet+</div>
+    </div>
+  </div>
+  
+  <!-- Test 10: Sidebar Layout -->
+  <div class="test-section">
+    <h2>Test 10: Sidebar Layout (stacked on mobile, side-by-side on desktop)</h2>
+    <div class="grid-sidebar-layout">
+      <div class="test-box" style="min-height: 200px;">Sidebar<br>Full width on mobile<br>250px on desktop</div>
+      <div class="test-box" style="min-height: 200px;">Main Content<br>Full width on mobile<br>Flexible on desktop</div>
+    </div>
+  </div>
+  
+  <div class="test-section">
+    <h2>Summary</h2>
+    <p><strong>All responsive features are working correctly if:</strong></p>
+    <ul>
+      <li>Typography scales smoothly as you resize</li>
+      <li>Grids adapt from 1 column (mobile) → 2 columns (tablet) → 4 columns (desktop)</li>
+      <li>Display utilities show/hide elements at correct breakpoints</li>
+      <li>Flex direction changes from column to row</li>
+      <li>Touch targets are at least 44x44px on mobile</li>
+      <li>Gaps increase with screen size</li>
+      <li>Layouts stack on mobile and spread horizontally on desktop</li>
+    </ul>
+  </div>
+</body>
+</html>

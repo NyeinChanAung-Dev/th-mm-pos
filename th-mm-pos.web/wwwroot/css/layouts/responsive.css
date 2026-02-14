@@ -1,0 +1,702 @@
+/* ============================================
+   Responsive Breakpoint Utilities
+   Mobile-First Approach
+   ============================================ */
+
+/* 
+   Breakpoint System:
+   - xs: 0-575px (default, no media query needed)
+   - sm: 576px and up
+   - md: 768px and up
+   - lg: 992px and up
+   - xl: 1200px and up
+   - xxl: 1400px and up
+*/
+
+/* ============================================
+   Fluid Typography Scaling
+   ============================================ */
+
+/* Base font size scales with viewport */
+html {
+  font-size: 16px; /* Base size for mobile */
+}
+
+@media (min-width: 576px) {
+  html {
+    font-size: calc(16px + 0.25vw);
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: calc(16px + 0.5vw);
+  }
+}
+
+@media (min-width: 992px) {
+  html {
+    font-size: 16px; /* Lock at 16px for desktop */
+  }
+}
+
+/* Fluid heading scales */
+h1, .h1 {
+  font-size: clamp(1.875rem, 4vw, 2.25rem); /* 30px - 36px */
+}
+
+h2, .h2 {
+  font-size: clamp(1.5rem, 3vw, 1.875rem); /* 24px - 30px */
+}
+
+h3, .h3 {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* 20px - 24px */
+}
+
+h4, .h4 {
+  font-size: clamp(1.125rem, 2vw, 1.25rem); /* 18px - 20px */
+}
+
+h5, .h5 {
+  font-size: clamp(1rem, 1.5vw, 1.125rem); /* 16px - 18px */
+}
+
+h6, .h6 {
+  font-size: clamp(0.875rem, 1.25vw, 1rem); /* 14px - 16px */
+}
+
+/* ============================================
+   Display Utilities
+   ============================================ */
+
+/* Hide on mobile (xs) */
+.d-xs-none {
+  display: none !important;
+}
+
+/* Show on mobile (xs) */
+.d-xs-block {
+  display: block !important;
+}
+
+.d-xs-inline {
+  display: inline !important;
+}
+
+.d-xs-inline-block {
+  display: inline-block !important;
+}
+
+.d-xs-flex {
+  display: flex !important;
+}
+
+.d-xs-inline-flex {
+  display: inline-flex !important;
+}
+
+.d-xs-grid {
+  display: grid !important;
+}
+
+/* Small devices (≥576px) */
+@media (min-width: 576px) {
+  .d-sm-none {
+    display: none !important;
+  }
+  
+  .d-sm-block {
+    display: block !important;
+  }
+  
+  .d-sm-inline {
+    display: inline !important;
+  }
+  
+  .d-sm-inline-block {
+    display: inline-block !important;
+  }
+  
+  .d-sm-flex {
+    display: flex !important;
+  }
+  
+  .d-sm-inline-flex {
+    display: inline-flex !important;
+  }
+  
+  .d-sm-grid {
+    display: grid !important;
+  }
+}
+
+/* Medium devices (≥768px) */
+@media (min-width: 768px) {
+  .d-md-none {
+    display: none !important;
+  }
+  
+  .d-md-block {
+    display: block !important;
+  }
+  
+  .d-md-inline {
+    display: inline !important;
+  }
+  
+  .d-md-inline-block {
+    display: inline-block !important;
+  }
+  
+  .d-md-flex {
+    display: flex !important;
+  }
+  
+  .d-md-inline-flex {
+    display: inline-flex !important;
+  }
+  
+  .d-md-grid {
+    display: grid !important;
+  }
+}
+
+/* Large devices (≥992px) */
+@media (min-width: 992px) {
+  .d-lg-none {
+    display: none !important;
+  }
+  
+  .d-lg-block {
+    display: block !important;
+  }
+  
+  .d-lg-inline {
+    display: inline !important;
+  }
+  
+  .d-lg-inline-block {
+    display: inline-block !important;
+  }
+  
+  .d-lg-flex {
+    display: flex !important;
+  }
+  
+  .d-lg-inline-flex {
+    display: inline-flex !important;
+  }
+  
+  .d-lg-grid {
+    display: grid !important;
+  }
+}
+
+/* Extra large devices (≥1200px) */
+@media (min-width: 1200px) {
+  .d-xl-none {
+    display: none !important;
+  }
+  
+  .d-xl-block {
+    display: block !important;
+  }
+  
+  .d-xl-inline {
+    display: inline !important;
+  }
+  
+  .d-xl-inline-block {
+    display: inline-block !important;
+  }
+  
+  .d-xl-flex {
+    display: flex !important;
+  }
+  
+  .d-xl-inline-flex {
+    display: inline-flex !important;
+  }
+  
+  .d-xl-grid {
+    display: grid !important;
+  }
+}
+
+/* Extra extra large devices (≥1400px) */
+@media (min-width: 1400px) {
+  .d-xxl-none {
+    display: none !important;
+  }
+  
+  .d-xxl-block {
+    display: block !important;
+  }
+  
+  .d-xxl-inline {
+    display: inline !important;
+  }
+  
+  .d-xxl-inline-block {
+    display: inline-block !important;
+  }
+  
+  .d-xxl-flex {
+    display: flex !important;
+  }
+  
+  .d-xxl-inline-flex {
+    display: inline-flex !important;
+  }
+  
+  .d-xxl-grid {
+    display: grid !important;
+  }
+}
+
+/* ============================================
+   Responsive Spacing Utilities
+   ============================================ */
+
+/* Mobile spacing adjustments */
+.container-responsive {
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+}
+
+@media (min-width: 576px) {
+  .container-responsive {
+    padding-left: var(--spacing-5);
+    padding-right: var(--spacing-5);
+  }
+}
+
+@media (min-width: 768px) {
+  .container-responsive {
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+  }
+}
+
+@media (min-width: 992px) {
+  .container-responsive {
+    padding-left: var(--spacing-8);
+    padding-right: var(--spacing-8);
+  }
+}
+
+/* ============================================
+   Touch Target Utilities
+   ============================================ */
+
+/* Ensure minimum 44x44px touch targets on mobile */
+@media (max-width: 767px) {
+  .touch-target,
+  button,
+  a.btn,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Form inputs */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    min-height: 44px;
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+  
+  /* Checkbox and radio */
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 24px;
+    min-height: 24px;
+  }
+  
+  /* Links in navigation */
+  nav a,
+  .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+}
+
+/* ============================================
+   Responsive Text Alignment
+   ============================================ */
+
+.text-xs-left {
+  text-align: left !important;
+}
+
+.text-xs-center {
+  text-align: center !important;
+}
+
+.text-xs-right {
+  text-align: right !important;
+}
+
+@media (min-width: 576px) {
+  .text-sm-left {
+    text-align: left !important;
+  }
+  
+  .text-sm-center {
+    text-align: center !important;
+  }
+  
+  .text-sm-right {
+    text-align: right !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .text-md-left {
+    text-align: left !important;
+  }
+  
+  .text-md-center {
+    text-align: center !important;
+  }
+  
+  .text-md-right {
+    text-align: right !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .text-lg-left {
+    text-align: left !important;
+  }
+  
+  .text-lg-center {
+    text-align: center !important;
+  }
+  
+  .text-lg-right {
+    text-align: right !important;
+  }
+}
+
+/* ============================================
+   Responsive Flex Utilities
+   ============================================ */
+
+/* Mobile flex direction */
+.flex-xs-row {
+  flex-direction: row !important;
+}
+
+.flex-xs-column {
+  flex-direction: column !important;
+}
+
+.flex-xs-row-reverse {
+  flex-direction: row-reverse !important;
+}
+
+.flex-xs-column-reverse {
+  flex-direction: column-reverse !important;
+}
+
+@media (min-width: 576px) {
+  .flex-sm-row {
+    flex-direction: row !important;
+  }
+  
+  .flex-sm-column {
+    flex-direction: column !important;
+  }
+  
+  .flex-sm-row-reverse {
+    flex-direction: row-reverse !important;
+  }
+  
+  .flex-sm-column-reverse {
+    flex-direction: column-reverse !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .flex-md-row {
+    flex-direction: row !important;
+  }
+  
+  .flex-md-column {
+    flex-direction: column !important;
+  }
+  
+  .flex-md-row-reverse {
+    flex-direction: row-reverse !important;
+  }
+  
+  .flex-md-column-reverse {
+    flex-direction: column-reverse !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .flex-lg-row {
+    flex-direction: row !important;
+  }
+  
+  .flex-lg-column {
+    flex-direction: column !important;
+  }
+  
+  .flex-lg-row-reverse {
+    flex-direction: row-reverse !important;
+  }
+  
+  .flex-lg-column-reverse {
+    flex-direction: column-reverse !important;
+  }
+}
+
+/* ============================================
+   Responsive Width Utilities
+   ============================================ */
+
+.w-xs-100 {
+  width: 100% !important;
+}
+
+.w-xs-auto {
+  width: auto !important;
+}
+
+@media (min-width: 576px) {
+  .w-sm-100 {
+    width: 100% !important;
+  }
+  
+  .w-sm-auto {
+    width: auto !important;
+  }
+  
+  .w-sm-50 {
+    width: 50% !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .w-md-100 {
+    width: 100% !important;
+  }
+  
+  .w-md-auto {
+    width: auto !important;
+  }
+  
+  .w-md-50 {
+    width: 50% !important;
+  }
+  
+  .w-md-33 {
+    width: 33.333% !important;
+  }
+  
+  .w-md-66 {
+    width: 66.666% !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .w-lg-100 {
+    width: 100% !important;
+  }
+  
+  .w-lg-auto {
+    width: auto !important;
+  }
+  
+  .w-lg-50 {
+    width: 50% !important;
+  }
+  
+  .w-lg-33 {
+    width: 33.333% !important;
+  }
+  
+  .w-lg-66 {
+    width: 66.666% !important;
+  }
+  
+  .w-lg-25 {
+    width: 25% !important;
+  }
+  
+  .w-lg-75 {
+    width: 75% !important;
+  }
+}
+
+/* ============================================
+   Responsive Overflow Utilities
+   ============================================ */
+
+/* Mobile: Enable horizontal scrolling for tables */
+@media (max-width: 767px) {
+  .table-responsive-mobile {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ============================================
+   Viewport-Specific Classes
+   ============================================ */
+
+/* Mobile-only (< 576px) */
+@media (min-width: 576px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* Tablet and up (≥ 576px) */
+@media (max-width: 575px) {
+  .tablet-up {
+    display: none !important;
+  }
+}
+
+/* Desktop and up (≥ 992px) */
+@media (max-width: 991px) {
+  .desktop-up {
+    display: none !important;
+  }
+}
+
+/* Mobile and tablet (< 992px) */
+@media (min-width: 992px) {
+  .mobile-tablet {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   Responsive Gap Utilities
+   ============================================ */
+
+.gap-xs-2 {
+  gap: var(--spacing-2) !important;
+}
+
+.gap-xs-3 {
+  gap: var(--spacing-3) !important;
+}
+
+.gap-xs-4 {
+  gap: var(--spacing-4) !important;
+}
+
+@media (min-width: 576px) {
+  .gap-sm-2 {
+    gap: var(--spacing-2) !important;
+  }
+  
+  .gap-sm-3 {
+    gap: var(--spacing-3) !important;
+  }
+  
+  .gap-sm-4 {
+    gap: var(--spacing-4) !important;
+  }
+  
+  .gap-sm-6 {
+    gap: var(--spacing-6) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .gap-md-2 {
+    gap: var(--spacing-2) !important;
+  }
+  
+  .gap-md-3 {
+    gap: var(--spacing-3) !important;
+  }
+  
+  .gap-md-4 {
+    gap: var(--spacing-4) !important;
+  }
+  
+  .gap-md-6 {
+    gap: var(--spacing-6) !important;
+  }
+  
+  .gap-md-8 {
+    gap: var(--spacing-8) !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .gap-lg-2 {
+    gap: var(--spacing-2) !important;
+  }
+  
+  .gap-lg-3 {
+    gap: var(--spacing-3) !important;
+  }
+  
+  .gap-lg-4 {
+    gap: var(--spacing-4) !important;
+  }
+  
+  .gap-lg-6 {
+    gap: var(--spacing-6) !important;
+  }
+  
+  .gap-lg-8 {
+    gap: var(--spacing-8) !important;
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+
+@media print {
+  /* Hide navigation and non-essential elements */
+  nav,
+  .navbar,
+  .sidebar,
+  .theme-toggle,
+  .mobile-nav-toggle,
+  button:not(.print-visible) {
+    display: none !important;
+  }
+  
+  /* Optimize for print */
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+  
+  /* Prevent page breaks inside elements */
+  .card,
+  .table-row,
+  .product-item {
+    page-break-inside: avoid;
+  }
+  
+  /* Show URLs for links */
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+}

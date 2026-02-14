@@ -1,0 +1,26 @@
+/* Light Theme
+ * Default theme with light backgrounds and dark text
+ * This file sets the data-theme attribute to "light" by default
+ */
+
+:root {
+  /* Theme identifier */
+  color-scheme: light;
+}
+
+/* Light theme is the default and defined in colors.css :root selector */
+/* This file exists for explicit light theme loading and organization */
+
+/* Additional light theme specific overrides can be added here */
+
+/* Ensure smooth transitions when theme changes */
+* {
+  transition: background-color 200ms ease-out, 
+              color 200ms ease-out, 
+              border-color 200ms ease-out;
+}
+
+/* Disable transitions on theme change to prevent flash */
+.theme-transitioning * {
+  transition: none !important;
+}

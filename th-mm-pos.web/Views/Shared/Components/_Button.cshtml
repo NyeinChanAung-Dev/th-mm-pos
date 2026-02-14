@@ -1,0 +1,88 @@
+@model th_mm_pos.web.Models.Components.ButtonViewModel
+
+@{
+    // Build CSS classes
+    var cssClasses = new List<string>
+    {
+        "btn-custom",
+        $"btn-custom-{Model.Variant}",
+        $"btn-custom-{Model.Size}"
+    };
+
+    if (!string.IsNullOrEmpty(Model.CssClass))
+    {
+        cssClasses.Add(Model.CssClass);
+    }
+
+    if (Model.IsLoading)
+    {
+        cssClasses.Add("btn-custom-loading");
+    }
+
+    var classString = string.Join(" ", cssClasses);
+
+    // Determine if button should be disabled
+    var isDisabled = Model.IsDisabled || Model.IsLoading;
+
+    // Build additional attributes
+    var attributes = new Dictionary<string, string>();
+    if (Model.Attributes != null)
+    {
+        foreach (var attr in Model.Attributes)
+        {
+            attributes[attr.Key] = attr.Value;
+        }
+    }
+
+    if (!string.IsNullOrEmpty(Model.OnClick))
+    {
+        attributes["onclick"] = Model.OnClick;
+    }
+}
+
+@if (!string.IsNullOrEmpty(Model.Href))
+{
+    @* Render as link styled as button *@
+    <a href="@Model.Href" 
+       class="@classString" 
+       @if (isDisabled) { <text>aria-disabled="true"</text> }
+       @foreach (var attr in attributes)
+       {
+           @Html.Raw($"{attr.Key}=\"{attr.Value}\"")
+       }>
+        @if (Model.IsLoading)
+        {
+            <span class="btn-custom-spinner" role="status" aria-label="Loading">
+                <i class="bi bi-arrow-clockwise"></i>
+            </span>
+        }
+        else if (!string.IsNullOrEmpty(Model.Icon))
+        {
+            <i class="@Model.Icon" aria-hidden="true"></i>
+        }
+        <span class="btn-custom-text">@Model.Text</span>
+    </a>
+}
+else
+{
+    @* Render as button *@
+    <button type="@Model.Type" 
+            class="@classString" 
+            @if (isDisabled) { <text>disabled</text> }
+            @foreach (var attr in attributes)
+            {
+                @Html.Raw($"{attr.Key}=\"{attr.Value}\"")
+            }>
+        @if (Model.IsLoading)
+        {
+            <span class="btn-custom-spinner" role="status" aria-label="Loading">
+                <i class="bi bi-arrow-clockwise"></i>
+            </span>
+        }
+        else if (!string.IsNullOrEmpty(Model.Icon))
+        {
+            <i class="@Model.Icon" aria-hidden="true"></i>
+        }
+        <span class="btn-custom-text">@Model.Text</span>
+    </button>
+}

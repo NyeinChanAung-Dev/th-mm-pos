@@ -1,0 +1,58 @@
+/* Dark Theme
+ * Alternative theme with dark backgrounds and light text
+ * Activated when [data-theme="dark"] is set on the root element
+ */
+
+[data-theme="dark"] {
+  /* Theme identifier */
+  color-scheme: dark;
+}
+
+/* Dark theme colors are defined in colors.css [data-theme="dark"] selector */
+/* This file exists for explicit dark theme loading and organization */
+
+/* Additional dark theme specific overrides */
+
+/* Adjust shadows for dark theme - lighter shadows work better on dark backgrounds */
+[data-theme="dark"] {
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+}
+
+/* Adjust image brightness in dark mode for better visibility */
+[data-theme="dark"] img:not(.no-dark-filter) {
+  opacity: 0.9;
+}
+
+/* Ensure smooth transitions when theme changes */
+[data-theme="dark"] * {
+  transition: background-color 200ms ease-out, 
+              color 200ms ease-out, 
+              border-color 200ms ease-out;
+}
+
+/* Disable transitions on theme change to prevent flash */
+[data-theme="dark"].theme-transitioning * {
+  transition: none !important;
+}
+
+/* Scrollbar styling for dark theme */
+[data-theme="dark"] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--color-gray-600);
+  border-radius: 6px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-500);
+}
